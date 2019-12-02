@@ -1,0 +1,69 @@
+---
+# Name of this project
+name: terraform-aws-backend
+title: AWS Terraform backend
+
+# Build Badges
+badges:
+  - name: "Build Status"
+    image: "https://circleci.com/gh/ifunky/terraform-aws-backend.svg?style=svg"
+    url: "https://circleci.com/gh/ifunky/terraform-aws-backend-ami"
+
+description: |-
+ This module has been separated to get around the chicken and the egg situation when creating a new Terraform root project where by the state backend does not exists
+ to begin with. 
+ 
+ ## Features
+ 
+ ### S3 Backend Bucket
+ 
+ - Creates a non public bucket for the Terraform state.  The full bucket name is built by concatenating namespace, environment and bucket name
+ - Creates an S3 default policy with restricted permissions
+ 
+ ### Cross Account Access
+ - Backend can optionally be shared with read acccess to other accounts (useful when using `terraform_remote_state`)
+
+ ### DynomoDB Locking Information
+ 
+ - NOT IMPLEMENTED YET
+
+ ## Initialising a New Project
+ 
+ To start a new terraform project and set a new backend run the following commands:
+ 
+     terraform init -backend=false -var-file="backend.tfvars"
+     terraform plan -out=backend.plan -target=module.backend -var-file="backend.tfvars"
+     terraform apply backend.plan
+ 
+ backend.tfvars
+ 
+     bucket = "COMPANY.development.terraform"
+     key    = "state/terraform.tfstate"
+ 
+ For more information on Terraform partial backends see [Terraform Partial Backend]
+ 
+ [Terraform Partial Backend]: https://www.terraform.io/docs/backends/config.html
+
+# How to use this project
+usage: |-
+  ```hcl
+  data "aws_organizations_organization" "default" {}
+
+  module "aws_terraform_backend" {
+    source = "git::https://github.com/ifunky/terraform-aws-backend.git?ref=master"
+  
+    namespace            = "iFunky"   
+    environment          = "development" 
+    bucket_name          = "terraform"
+    write_access_arns    = [var.terraform_role_arn]
+    readonly_access_arns = data.aws_organizations_organization.default.accounts[*].id
+
+    tags = {
+      Terraform = "true"
+    }
+  }
+  ```
+# Include output from terraform-module-inspect
+include:
+  - "docs/targets.md"
+  - "docs/metadata.md"
