@@ -84,8 +84,8 @@ resource "aws_s3_bucket" "tf_state_bucket" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        kms_master_key_id = "${var.kms_key_id}"
-        sse_algorithm     = "${var.kms_key_id == "" ? "AES256" : "aws:kms"}"
+        kms_master_key_id = var.kms_key_id
+        sse_algorithm     = var.kms_key_id == "" ? "AES256" : "aws:kms"
       }
     }
   }
@@ -95,7 +95,7 @@ resource "aws_s3_bucket" "tf_state_bucket" {
   }
 }
 resource "aws_s3_bucket_public_access_block" "tf_state_private" {
-  bucket = "${aws_s3_bucket.tf_state_bucket.id}"
+  bucket = aws_s3_bucket.tf_state_bucket.id
 
   block_public_acls   = true
   block_public_policy = true
