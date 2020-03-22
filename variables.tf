@@ -34,8 +34,12 @@ variable "tags" {
   description = "Additional tags (e.g. map('BusinessUnit`,`XYZ`)"
 }
 
+variable "state_bucket_name" {
+    description = "S3 state name to use i.e `terraform`"
+}
+
 variable "bucket_name" {
-    description = "S3 bucket name to use"
+    description = "S3 bucket name i.e `mycompany.service.terraform`"
 }
 
 variable "kms_key_id" {

@@ -3,14 +3,14 @@ module "terraform_state_s3_label" {
   namespace  = var.namespace
   environment= var.environment
   stage      = var.stage
-  name       = var.bucket_name
+  name       = var.state_bucket_name
   delimiter  = var.delimiter
   attributes = var.attributes
   tags       = var.tags
 }
 
 locals {
-  full_bucket_name = module.terraform_state_s3_label.id
+  full_bucket_name = var.bucket_name != "" ? var.bucket_name : module.terraform_state_s3_label.id
 }
 
 data "aws_iam_policy_document" "s3_terraform_policy" {

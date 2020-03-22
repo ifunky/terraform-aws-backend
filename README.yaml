@@ -8,6 +8,9 @@ badges:
   - name: "Build Status"
     image: "https://circleci.com/gh/ifunky/terraform-aws-backend.svg?style=svg"
     url: "https://circleci.com/gh/ifunky/terraform-aws-backend-ami"
+  - name: "License"
+    image: "https://img.shields.io/badge/License-Apache%202.0-blue.svg"
+    url: "https://opensource.org/licenses/Apache-2.0"
 
 description: |-
  This module has been separated to get around the chicken and the egg situation when creating a new Terraform root project where by the state backend does not exists
@@ -54,7 +57,10 @@ usage: |-
   
     namespace            = "iFunky"   
     environment          = "development" 
-    bucket_name          = "terraform"
+    bucket_name          = "mycompany.product.terraform"
+    state_bucket_name    = "terraform"
+    
+    # Optional if run inside an AWS organisation
     write_access_arns    = [var.terraform_role_arn]
     readonly_access_arns = data.aws_organizations_organization.default.accounts[*].id
 
