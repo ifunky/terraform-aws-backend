@@ -35,7 +35,8 @@ variable "tags" {
 }
 
 variable "state_bucket_name" {
-    description = "S3 state name to use i.e `terraform`"
+    description = "S3 state name to use. Required when not specifing `bucket_name` i.e `terraform`"
+    default     = ""
 }
 
 variable "bucket_name" {

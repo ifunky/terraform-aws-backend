@@ -90,7 +90,7 @@ Provider Requirements:
 * `namespace` (required): Namespace - typically the company name (e.g. `ume`)
 * `readonly_access_arns` (required): IAM arns that have readonly access to this backend, typically used for remote state access from other accounts within the organisation
 * `stage` (required): Stage (e.g. `dev`, `test`, `prod`)
-* `state_bucket_name` (required): S3 state name to use i.e `terraform`
+* `state_bucket_name` (required): S3 state name to use. Required when not specifing `bucket_name` i.e `terraform`
 * `tags` (required): Additional tags (e.g. map('BusinessUnit`,`XYZ`)
 * `write_access_arns` (required): IAM arns that have write access to this backend, typically Terraform runners/service accounts
 
