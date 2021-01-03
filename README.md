@@ -79,7 +79,7 @@ Core Version Constraints:
 * `~> 0.12.6`
 
 Provider Requirements:
-* **aws:** `~> 2.40`
+* **aws:** `>= 2.40`
 
 ## Input Variables
 * `attributes` (required): Additional attributes (e.g. `1`)
