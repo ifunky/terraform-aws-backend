@@ -3,7 +3,7 @@ output "s3_state_bucket_name" {
 }
 
 output "s3_state_bucket" {
-  value = aws_s3_bucket.tf_state_bucket.bucket
+  value = aws_s3_bucket.tf_state_bucket
 }
 
 output "dynamodb_table_arn" {
