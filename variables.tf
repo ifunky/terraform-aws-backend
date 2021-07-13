@@ -43,6 +43,11 @@ variable "bucket_name" {
     description = "S3 bucket name i.e `mycompany.service.terraform`"
 }
 
+variable "dynamo_db_table_name" {
+  description = "DynamoDB table name used for Terraform state locking"
+  default     = "terraform-locking"
+}
+
 variable "kms_key_id" {
   description = "AWS KMS master key ID used for SSE-KMS encryption. The default aws/s3 AWS KMS master key is used if this element is absent"
   default     = ""
