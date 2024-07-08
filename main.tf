@@ -80,7 +80,7 @@ resource "aws_s3_bucket" "tf_state_bucket" {
   }
 }
 
-resource "aws_s3_bucket_policy" "tf_state_bucke" {
+resource "aws_s3_bucket_policy" "tf_state_bucket" {
   bucket = aws_s3_bucket.tf_state_bucket.id
   policy = data.aws_iam_policy_document.s3_terraform_policy.json
 }
