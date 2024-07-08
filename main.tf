@@ -1,7 +1,3 @@
-locals {
-  enable_dynamo_db_table        = var.enable_dynamo_db_table
-}
-
 module "terraform_state_s3_label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=0.22.0"
   namespace  = var.namespace
@@ -119,8 +115,8 @@ resource "aws_s3_bucket_public_access_block" "tf_state_private" {
 }
 
 resource "aws_dynamodb_table" "tf_lock_state" {
-  count     = local.enable_dynamo_db_table != true ? 1 : 0  
-  name = var.dynamo_db_table_name
+  count = var.create_dynamodb_locking_table ? 1 : 0  
+  name  = var.dynamo_db_table_name
 
   billing_mode = "PAY_PER_REQUEST"
   hash_key = "LockID"

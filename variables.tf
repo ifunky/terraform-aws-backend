@@ -48,7 +48,7 @@ variable "dynamo_db_table_name" {
   default     = "terraform-locking"
 }
 
-variable "enable_dynamo_db_table" {
+variable "create_dynamodb_locking_table" {
   type        = bool
   default     = false
   description = "Enable/disable creating DynamoDB locking table."
