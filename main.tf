@@ -64,7 +64,6 @@ data "aws_iam_policy_document" "s3_terraform_policy" {
 
 resource "aws_s3_bucket" "tf_state_bucket" {
   bucket = local.full_bucket_name
-  policy = data.aws_iam_policy_document.s3_terraform_policy.json
 
   #logging {
   #  target_bucket = var.audit_access_bucket
@@ -79,6 +78,11 @@ resource "aws_s3_bucket" "tf_state_bucket" {
   lifecycle {
     prevent_destroy = false
   }
+}
+
+resource "aws_s3_bucket_policy" "tf_state_bucke" {
+  bucket = aws_s3_bucket.tf_state_bucket.id
+  policy = data.aws_iam_policy_document.s3_terraform_policy.json
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "tf_state_bucket" {
