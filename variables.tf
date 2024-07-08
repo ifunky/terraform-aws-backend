@@ -48,6 +48,12 @@ variable "dynamo_db_table_name" {
   default     = "terraform-locking"
 }
 
+variable "enable_dynamo_db_table" {
+  type        = bool
+  default     = false
+  description = "Enable/disable creating DynamoDB locking table."
+}
+
 variable "kms_key_id" {
   description = "AWS KMS master key ID used for SSE-KMS encryption. The default aws/s3 AWS KMS master key is used if this element is absent"
   default     = ""
