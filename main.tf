@@ -64,13 +64,8 @@ data "aws_iam_policy_document" "s3_terraform_policy" {
 
 resource "aws_s3_bucket" "tf_state_bucket" {
   bucket = local.full_bucket_name
-  acl    = "private"
   policy = data.aws_iam_policy_document.s3_terraform_policy.json
 
-  versioning {
-    enabled = true
-  }
-    
   #logging {
   #  target_bucket = var.audit_access_bucket
   #  target_prefix = "log/"
@@ -80,7 +75,7 @@ resource "aws_s3_bucket" "tf_state_bucket" {
     Description     = "Terraform S3 state backend bucket."
     Terraform       = "true"
   }
-  
+    
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -92,6 +87,19 @@ resource "aws_s3_bucket" "tf_state_bucket" {
   
   lifecycle {
     prevent_destroy = false
+  }
+}
+
+resource "aws_s3_bucket_acl" "tf_state_bucket" {
+  bucket = aws_s3_bucket.tf_state_bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "tf_state_bucket" {
+  bucket = aws_s3_bucket.tf_state_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
